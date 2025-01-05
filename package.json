@@ -1,0 +1,12 @@
+{
+  "name": "udemy-ssr-react-course",
+  "version": "1.0.0",
+  "description": "ssr in react udemy course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "author": "Zeel",
+  "license": "ISC"
+}
