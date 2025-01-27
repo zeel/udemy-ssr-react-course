@@ -1,6 +1,4 @@
-import { fetchBaseQuery, buildCreateApi, coreModule, reactHooksModule } from '@reduxjs/toolkit/query/react';
-
-const createApi = buildCreateApi(coreModule(), reactHooksModule({ unstable__sideEffectsInRender: true }));
+import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 export interface User {
   id: number;
