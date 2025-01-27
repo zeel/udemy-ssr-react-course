@@ -1,5 +1,6 @@
 import React from "react";
-import { useGetUsersQuery } from "../reducers/users";
+import { usersApi, useGetUsersQuery } from "../reducers/users";
+import { Store } from "@reduxjs/toolkit";
 
 const Users = () => {
   const { data, error, isLoading } = useGetUsersQuery();
@@ -16,6 +17,11 @@ const Users = () => {
         ))}
     </div>
   );
+};
+
+export const loadData = (store: Store) => {
+  // @ts-ignore
+  return store.dispatch(usersApi.endpoints.getUsers.initiate());
 };
 
 export default Users;
