@@ -11,6 +11,7 @@ const domNode = document.getElementById("root");
 ReactDOM.hydrate(
   <BrowserRouter>
     <Provider store={store}>
+      {/* @ts-ignore */}
       <div>{renderRoutes(Routes)}</div>
     </Provider>
   </BrowserRouter>,

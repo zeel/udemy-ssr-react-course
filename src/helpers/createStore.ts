@@ -1,17 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
-import { usersApi } from "./users";
+import { usersApi } from "../client/reducers/users";
 
-export const store = configureStore({
+export const createStore = configureStore({
   reducer: {
     [usersApi.reducerPath]: usersApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(usersApi.middleware),
-  preloadedState: window.INITIAL_STATE,
 });
 
-setupListeners(store.dispatch);
-
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+setupListeners(createStore.dispatch);

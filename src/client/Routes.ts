@@ -1,20 +1,20 @@
+import { Store } from "@reduxjs/toolkit";
 import App from "./App";
-import Home from "./components/Home";
-import Users, { loadData } from "./components/Users";
+import Home from "./pages/HomePage";
+import Users from "./pages/UsersPage";
 
 export default [
   {
     component: App,
     routes: [
       {
+        ...Home,
         path: "/",
-        component: Home,
         exact: true,
       },
       {
+        ...Users,
         path: "/users",
-        component: Users,
-        loadData,
       },
     ],
   },

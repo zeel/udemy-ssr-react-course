@@ -19,9 +19,9 @@ const Users = () => {
   );
 };
 
-export const loadData = (store: Store) => {
+const loadData = (store: Store) => {
   // @ts-ignore
   return store.dispatch(usersApi.endpoints.getUsers.initiate());
 };
 
-export default Users;
+export default { component: Users, loadData };
