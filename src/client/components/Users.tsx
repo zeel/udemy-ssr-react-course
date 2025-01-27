@@ -1,5 +1,5 @@
-import React from 'react';
-import { useGetUsersQuery } from '../reducers/users';
+import React from "react";
+import { useGetUsersQuery } from "../reducers/users";
 
 const Users = () => {
   const { data, error, isLoading } = useGetUsersQuery();
