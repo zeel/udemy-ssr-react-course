@@ -1,27 +1,40 @@
-import React from "react";
-import { usersApi, useGetUsersQuery } from "../reducers/users";
+import React, { useEffect } from "react";
+import { useSelector, connect } from "react-redux";
+import {
+  fetchUsers,
+  selectAllUsers,
+  getUsersError,
+  getUsersStatus,
+  User,
+} from "../reducers/users";
 import { Store } from "@reduxjs/toolkit";
+import { AppDispatch } from "../reducers";
 
-const Users = () => {
-  const { data, error, isLoading } = useGetUsersQuery();
-
+const Users = ({ dispatch }: { dispatch: AppDispatch }) => {
+  const users = useSelector(selectAllUsers);
+  const status = useSelector(getUsersStatus);
+  const error = useSelector(getUsersError);
+  useEffect(() => {
+    if (!users.length) dispatch(fetchUsers());
+  }, []);
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Something went wrong!</div>}
-      {data &&
-        data.map(({ id, name }) => (
-          <div key={id}>
-            <span>{id}</span> <span>{name}</span>
-          </div>
-        ))}
+      {status === "loading" && <div>Loading...</div>}
+      {error && <div>Something went wrong! {error}</div>}
+      {users && (
+        <ul>
+          {users.map(({ id, name }: User) => (
+            <li key={id}>{name}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
 const loadData = (store: Store) => {
   // @ts-ignore
-  return store.dispatch(usersApi.endpoints.getUsers.initiate());
+  return store.dispatch(fetchUsers());
 };
 
-export default { component: Users, loadData };
+export default { component: connect()(Users), loadData };

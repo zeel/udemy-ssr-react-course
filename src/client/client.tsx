@@ -6,6 +6,8 @@ import { renderRoutes } from "react-router-config";
 import Routes from "./Routes";
 import { store } from "./reducers";
 
+import "./style.scss";
+
 const domNode = document.getElementById("root");
 
 ReactDOM.hydrate(

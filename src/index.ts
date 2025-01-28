@@ -3,7 +3,7 @@ import { RouteConfig, matchRoutes } from "react-router-config";
 import proxy from "express-http-proxy";
 import renderer from "./helpers/renderer";
 import Routes from "./client/Routes";
-import { createStore } from "./helpers/createStore";
+import { createStoreSSR } from "./helpers/createStore";
 
 const app = express();
 
@@ -17,16 +17,17 @@ app.use(
   })
 );
 app.use(express.static("public"));
-app.get("*", async (req, res) => {
+app.get("*", (req, res) => {
+  const store = createStoreSSR(req);
   // @ts-ignore
   const promises = matchRoutes(Routes, req.path).map(
     ({ route }: { route: RouteConfig }) => {
       // @ts-ignore
-      return route.loadData ? route.loadData(createStore) : null;
+      return route.loadData ? route.loadData(store) : null;
     }
   );
 
-  await Promise.all(promises).then(() => res.send(renderer(req, createStore)));
+  Promise.all(promises).then(() => res.send(renderer(req, store)));
 });
 
 app.listen(3000, () => {

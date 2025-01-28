@@ -1,13 +1,23 @@
+import axios from "axios";
+import { Request } from "express";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
-import { usersApi } from "../client/reducers/users";
+import reducer from "../client/reducers/reducer";
 
-export const createStore = configureStore({
-  reducer: {
-    [usersApi.reducerPath]: usersApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(usersApi.middleware),
-});
+export const createStoreSSR = (req: Request) => {
+  const axiosInstance = axios.create({
+    baseURL: "http://react-ssr-api.herokuapp.com",
+    headers: { cookie: req.get("cookie") || "" },
+  });
+  const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: { extraArgument: axiosInstance },
+        serializableCheck: false,
+      }),
+  });
 
-setupListeners(createStore.dispatch);
+  setupListeners(store.dispatch);
+  return store;
+};
