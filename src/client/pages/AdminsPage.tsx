@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Store } from "@reduxjs/toolkit";
+import Helmet from "react-helmet";
 import {
   fetchAdmins,
   getAllAdmins,
@@ -9,7 +11,6 @@ import {
   Admin,
 } from "../reducers/admins";
 import { isCurrentUserAuthenticated } from "../reducers/auth";
-import { Store } from "@reduxjs/toolkit";
 import { AppDispatch } from "../reducers";
 
 const Admins = ({ dispatch }: { dispatch: AppDispatch }) => {
@@ -22,6 +23,10 @@ const Admins = ({ dispatch }: { dispatch: AppDispatch }) => {
   }, [isAuth]);
   return isAuth ? (
     <div className="text-center">
+      <Helmet>
+        <title>{admins.length} Admins loaded</title>
+        <meta property="og:title" content="Admin Page" />
+      </Helmet>
       {status === "loading" && <div>Loading...</div>}
       {error && <Redirect to="/" />}
       {admins.length > 0 && (
