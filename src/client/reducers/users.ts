@@ -21,7 +21,7 @@ export const usersApi = createSlice({
   initialState: { status: "idle", users: [], error: "" },
   extraReducers(builder) {
     builder
-      .addCase(fetchUsers.pending, (state, action) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {

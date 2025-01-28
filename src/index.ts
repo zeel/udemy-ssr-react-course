@@ -19,15 +19,25 @@ app.use(
 app.use(express.static("public"));
 app.get("*", (req, res) => {
   const store = createStoreSSR(req);
-  // @ts-ignore
+  const context = { url: '', isNotFound: false };
+  // @ts-expect-error routeissue
   const promises = matchRoutes(Routes, req.path).map(
     ({ route }: { route: RouteConfig }) => {
-      // @ts-ignore
+      // @ts-expect-error routeissue
       return route.loadData ? route.loadData(store) : null;
     }
   );
 
-  Promise.all(promises).then(() => res.send(renderer(req, store)));
+  Promise.all(promises).then(() => {
+    const content = renderer(req, store, context);
+    if (context.url) {
+      return res.redirect(301, context.url);
+    }
+    if (context.isNotFound) {
+      res.status(404);
+    }
+    res.send(content);
+  });
 });
 
 app.listen(3000, () => {

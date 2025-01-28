@@ -13,7 +13,7 @@ const domNode = document.getElementById("root");
 ReactDOM.hydrate(
   <BrowserRouter>
     <Provider store={store}>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error renderroute issue */}
       <div>{renderRoutes(Routes)}</div>
     </Provider>
   </BrowserRouter>,

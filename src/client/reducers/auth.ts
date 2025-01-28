@@ -16,7 +16,7 @@ export const authApi = createSlice({
   initialState: { status: "idle", isAuth: false, error: "" },
   extraReducers(builder) {
     builder
-      .addCase(fetchCurrentUser.pending, (state, action) => {
+      .addCase(fetchCurrentUser.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {

@@ -5,7 +5,7 @@
     > li {
       @apply inline-block relative shadow-md;
       > a {
-        @apply relative flex capitalize items-start text-sm font-medium leading-6 text-slate-600 dark:text-slate-300 px-5 py-6  transition-all duration-150;
+        @apply relative flex capitalize items-start text-sm font-medium leading-6 decoration-black px-5 py-6  transition-all duration-150;
       }
       &:hover {
         > a {

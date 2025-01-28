@@ -2,6 +2,6 @@ export {};
 
 declare global {
   interface Window {
-    INITIAL_STATE: {};
+    INITIAL_STATE: object;
   }
 }
