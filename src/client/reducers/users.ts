@@ -12,7 +12,7 @@ export const usersApi = createApi({
   }),
   endpoints: (builder) => ({
     getUsers: builder.query<UsersResponse, void>({
-      query: () => ({ url: "users/xss" }),
+      query: () => ({ url: "users" }),
     }),
   }),
 });
